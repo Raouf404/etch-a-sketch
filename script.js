@@ -30,7 +30,35 @@ function main(divs) {
   }
   Array.from(gridChildren).forEach((child) => {
     child.addEventListener("mouseover", () => {
-      child.classList.add("black");
+      let red, green, blue;
+      if (child.style.background === "") {
+        red = Math.floor(Math.random() * 256);
+        green = Math.floor(Math.random() * 256);
+        blue = Math.floor(Math.random() * 256);
+      } else {
+        let rgbColors = child.style.background;
+        // "rgb(64, 128, 256)"  =>  64, 128, 256
+        const matches = rgbColors.match(/\d+/g);
+        red = parseInt(matches[0]);
+        green = parseInt(matches[1]);
+        blue = parseInt(matches[2]);
+
+        // Anonymous function
+
+        const reduce = (color) => {
+          if (color >= 25) {
+            color -= 25;
+          } else {
+            color = 0;
+          }
+          return color;
+        };
+
+        red = reduce(red);
+        green = reduce(green);
+        blue = reduce(blue);
+      }
+      child.style.background = `rgb(${red}, ${green}, ${blue})`;
     });
   });
 }
